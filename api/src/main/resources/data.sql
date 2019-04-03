@@ -6,10 +6,10 @@ insert into ingrediente (id, nome, valor) values (4, 'Ovo', 0.80);
 insert into ingrediente (id, nome, valor) values (5, 'Queijo', 1.50);
 commit;
 
-insert into lanche (id, nome) values (1, 'X-Bacon');
-insert into lanche (id, nome) values (2, 'X-Burguer');
-insert into lanche (id, nome) values (3, 'X-Egg');
-insert into lanche (id, nome) values (4, 'X-Egg Bacon');
+insert into lanche (id, nome, url_imagem) values (1, 'X-Bacon','https://aimg.comendo.com.br/produtos/550/161130192208583f430081cf5.jpg');
+insert into lanche (id, nome, url_imagem) values (2, 'X-Burguer','https://aimg.comendo.com.br/produtos/550/161130192230583f431602c61.jpg');
+insert into lanche (id, nome, url_imagem) values (3, 'X-Egg','https://aimg.comendo.com.br/produtos/550/161130192528583f43c8be9d4.jpg');
+insert into lanche (id, nome, url_imagem) values (4, 'X-Egg Bacon','https://aimg.comendo.com.br/produtos/550/161130192741583f444da697b.jpg');
 commit;
 
 --X-Bacon: Bacon, hambúrguer de carne e queijo

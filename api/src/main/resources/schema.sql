@@ -10,7 +10,8 @@ CREATE TABLE ingrediente (
 
 CREATE TABLE lanche (
   id      BIGINT default seq_lanche.nextval primary key,
-  nome    VARCHAR(100) NOT NULL);
+  nome    VARCHAR(100) NOT NULL,
+  url_imagem    VARCHAR(1000));
 
 CREATE TABLE ingredientes_do_lanche (
   id_lanche      BIGINT,
