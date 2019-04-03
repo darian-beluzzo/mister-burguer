@@ -3,7 +3,7 @@ package com.misterburguer.application.service.impl;
 import com.misterburguer.application.service.BaseService;
 import com.misterburguer.application.service.LancheService;
 import com.misterburguer.domain.Lanche;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.misterburguer.domain.repository.LancheRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LancheServiceImpl extends BaseService<Lanche, Long> implements LancheService {
 
-    public LancheServiceImpl(final Class<Lanche> clazz, final JpaRepository<Lanche, Long> repository) {
-	super(clazz, repository);
+    public LancheServiceImpl(final LancheRepository repository) {
+	super(Lanche.class, repository);
     }
 }

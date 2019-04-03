@@ -3,7 +3,7 @@ package com.misterburguer.application.service.impl;
 import com.misterburguer.application.service.BaseService;
 import com.misterburguer.application.service.IngredienteService;
 import com.misterburguer.domain.Ingrediente;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.misterburguer.domain.repository.IngredienteRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class IngredienteServiceImpl extends BaseService<Ingrediente, Long> implements IngredienteService {
 
-    public IngredienteServiceImpl(final Class<Ingrediente> clazz, final JpaRepository<Ingrediente, Long> repository) {
-	super(clazz, repository);
+    public IngredienteServiceImpl(final IngredienteRepository repository) {
+	super(Ingrediente.class, repository);
     }
 }
