@@ -1,5 +1,7 @@
 package com.misterburguer.infra.dto;
 
+import com.misterburguer.domain.shared.IObjetoComId;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,7 @@ import java.util.List;
  * @version 1.0
  * @since 02/04/19
  */
-public class LancheDTO {
+public class LancheDTO implements IObjetoComId {
 
     private Long id;
 

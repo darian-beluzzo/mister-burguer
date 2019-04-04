@@ -32,3 +32,15 @@ insert into ingredientes_do_lanche (id_lanche, id_ingrediente) values (4, 2);
 insert into ingredientes_do_lanche (id_lanche, id_ingrediente) values (4, 3);
 insert into ingredientes_do_lanche (id_lanche, id_ingrediente) values (4, 5);
 commit;
+
+
+--Promoção
+--insert into promocao (id, nome, desconto, unidade) values (1, 'Light',10, 'PCT');
+--insert into promocao (id, nome, desconto, unidade) values (2, 'Muita carne',1, 'UN');
+--insert into promocao (id, nome, desconto, unidade) values (3, 'Muito queijo',1,'UN');
+--commit;
+--
+--insert into promocao_regras (id, id_promocao, operador) values (1, 1);
+--insert into promocao_regras (id, id_promocao, operador) values (2, 2);
+--insert into promocao_regras (id, id_promocao, operador) values (3, 3);
+--commit;

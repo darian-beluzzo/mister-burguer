@@ -1,7 +1,7 @@
 criar uma view (pojo) e remover o atributo valor do Lanche
-promoções na página inicial
 calcular o valor dos lanches no serviço
 calcular valor com promoção
+promoções na página inicial
 implementar seleção de lanches
 implementar lanche customizado
 implementar visualização do pagamento

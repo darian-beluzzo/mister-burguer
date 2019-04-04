@@ -1,6 +1,5 @@
 package com.misterburguer.application.service;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,7 @@ import java.util.Optional;
  * @version 1.0
  * @since 02/04/19
  */
-public interface IBaseService<T, ID extends Serializable> {
+public interface IBaseService<T, ID> {
 
     T create(T pEntity);
 

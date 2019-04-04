@@ -1,6 +1,9 @@
 package com.misterburguer.domain;
 
+import com.misterburguer.domain.shared.IObjetoComId;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -9,7 +12,7 @@ import java.util.List;
  * @since 30/03/19
  */
 @Entity
-public class Lanche {
+public class Lanche implements IObjetoComId {
 
     @Id
     @GeneratedValue
@@ -24,6 +27,9 @@ public class Lanche {
     private String nome;
 
     private String urlImagem;
+
+    @Transient
+    private BigDecimal valor;
 
     public Long getId() {
 	return id;
@@ -41,6 +47,10 @@ public class Lanche {
 	return urlImagem;
     }
 
+    public BigDecimal getValor() {
+	return valor;
+    }
+
     public void setId(final Long pId) {
 	id = pId;
     }
@@ -55,6 +65,10 @@ public class Lanche {
 
     public void setUrlImagem(final String pUrlImagem) {
 	urlImagem = pUrlImagem;
+    }
+
+    public void setValor(final BigDecimal pValor) {
+	valor = pValor;
     }
 
 }

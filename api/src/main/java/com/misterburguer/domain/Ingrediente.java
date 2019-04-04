@@ -1,5 +1,7 @@
 package com.misterburguer.domain;
 
+import com.misterburguer.domain.shared.IObjetoComId;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,7 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  * @since 30/03/19
  */
 @Entity
-public class Ingrediente {
+public class Ingrediente implements IObjetoComId {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

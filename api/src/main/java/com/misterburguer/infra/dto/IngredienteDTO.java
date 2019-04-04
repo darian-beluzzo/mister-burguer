@@ -1,11 +1,13 @@
 package com.misterburguer.infra.dto;
 
+import com.misterburguer.domain.shared.IObjetoComId;
+
 /**
  * @author darian.beluzzo
  * @version 1.0
  * @since 02/04/19
  */
-public class IngredienteDTO {
+public class IngredienteDTO implements IObjetoComId {
 
     private Long id;
 
