@@ -1,10 +1,12 @@
 package com.misterburguer.domain;
 
 import com.misterburguer.domain.shared.IObjetoComId;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author darian.beluzzo
@@ -30,6 +32,13 @@ public class Lanche implements IObjetoComId {
 
     @Transient
     private BigDecimal valor;
+
+    public String getDescricaoIngredientes() {
+	if (!CollectionUtils.isEmpty(ingredientes)) {
+	    return ingredientes.stream().map(Ingrediente::getNome).collect(Collectors.joining(", "));
+	}
+	return null;
+    }
 
     public Long getId() {
 	return id;
@@ -70,5 +79,4 @@ public class Lanche implements IObjetoComId {
     public void setValor(final BigDecimal pValor) {
 	valor = pValor;
     }
-
 }

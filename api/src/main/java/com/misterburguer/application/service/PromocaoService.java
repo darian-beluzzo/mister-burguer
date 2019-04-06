@@ -1,9 +1,9 @@
 package com.misterburguer.application.service;
 
-import com.misterburguer.infra.dto.PedidoDTO;
+import com.misterburguer.domain.Ingrediente;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author darian.beluzzo
@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface PromocaoService {
 
-    BigDecimal enquadrarPromocao(List<PedidoDTO> pIngredientes);
+    void calcularDescontoPromocao(List<Ingrediente> pIngredientes, Map<Long, Integer> pQuantidadeIngredientes);
 }

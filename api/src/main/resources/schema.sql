@@ -1,7 +1,7 @@
 create sequence seq_ingrediente;
 create sequence seq_lanche;
 create sequence seq_promocao;
---create sequence seq_promocao_regras;
+create sequence seq_promocao_regras;
 
 -- Começa do 100 devido ao setup (data.sql)
 alter sequence seq_ingrediente restart with 100;
@@ -24,10 +24,14 @@ CREATE TABLE ingredientes_do_lanche (
   id_ingrediente BIGINT);
 
 CREATE TABLE promocao (
-  id         BIGINT default seq_promocao.nextval primary key,
-  nome       VARCHAR(100) NOT NULL);
+  id          BIGINT default seq_promocao.nextval primary key,
+  nome        VARCHAR(100) NOT NULL,
+  quantidade  BIGINT       NOT NULL,
+  desconto    BIGINT       NOT NULL,
+  unidade     VARCHAR(10)  NOT NULL);
 
---CREATE TABLE promocao_regras (
---  id             BIGINT default seq_promocao_regras.nextval primary key,
---  id_ingrediente BIGINT);
---
+CREATE TABLE promocao_regras (
+  id             BIGINT default seq_promocao_regras.nextval primary key,
+  id_promocao    BIGINT      NOT NULL,
+  operador       VARCHAR(10) NOT NULL,
+  id_ingrediente BIGINT      NOT NULL);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author darian.beluzzo
@@ -24,20 +25,15 @@ public class IngredienteServiceImpl extends BaseService<Ingrediente, Long> imple
 	this.repository = repository;
     }
 
+    @Override
+    public List<Ingrediente> findAllById(final Set<Long> ingredientes) {
+	return repository.findAllById(ingredientes);
+    }
+
     public BigDecimal sumarizarValorIngredientes(final List<Ingrediente> ingredientes) {
 	if (ingredientes == null || ingredientes.size() == 0) {
 	    return BigDecimal.ZERO;
 	}
 	return ingredientes.stream().map(Ingrediente::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    public BigDecimal sumarizarValorIngredientesPorId(final List<Long> idsIngredientes) {
-	if (idsIngredientes == null || idsIngredientes.size() == 0) {
-	    return BigDecimal.ZERO;
-	}
-
-	List<Ingrediente> ingredientes = repository.findAllById(idsIngredientes);
-
-	return sumarizarValorIngredientes(ingredientes);
     }
 }

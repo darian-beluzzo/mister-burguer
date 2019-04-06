@@ -35,12 +35,13 @@ commit;
 
 
 --Promoção
---insert into promocao (id, nome, desconto, unidade) values (1, 'Light',10, 'PCT');
---insert into promocao (id, nome, desconto, unidade) values (2, 'Muita carne',1, 'UN');
---insert into promocao (id, nome, desconto, unidade) values (3, 'Muito queijo',1,'UN');
---commit;
---
---insert into promocao_regras (id, id_promocao, operador) values (1, 1);
---insert into promocao_regras (id, id_promocao, operador) values (2, 2);
---insert into promocao_regras (id, id_promocao, operador) values (3, 3);
---commit;
+insert into promocao (id, nome, quantidade, desconto, unidade) values (1, 'Light',1, 10, 'PCT');
+insert into promocao (id, nome, quantidade, desconto, unidade) values (2, 'Muita carne',3, 1, 'UN');
+insert into promocao (id, nome, quantidade, desconto, unidade) values (3, 'Muito queijo',3, 1,'UN');
+commit;
+
+insert into promocao_regras (id, id_promocao, operador, id_ingrediente) values (1, 1,'TEM', 1);
+insert into promocao_regras (id, id_promocao, operador, id_ingrediente) values (2, 1,'NAO_TEM', 2);
+insert into promocao_regras (id, id_promocao, operador, id_ingrediente) values (3, 2, 'TEM', 3);
+insert into promocao_regras (id, id_promocao, operador, id_ingrediente) values (4, 3, 'TEM', 5);
+commit;

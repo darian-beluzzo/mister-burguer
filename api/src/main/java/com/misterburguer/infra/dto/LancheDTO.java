@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class LancheDTO implements IObjetoComId {
 
+    private String descricaoIngredientes;
+
     private Long id;
 
     private List<IngredienteDTO> ingredientes;
@@ -20,6 +22,10 @@ public class LancheDTO implements IObjetoComId {
     private String urlImagem;
 
     private String valor;
+
+    public String getDescricaoIngredientes() {
+	return descricaoIngredientes;
+    }
 
     public Long getId() {
 	return id;
@@ -39,6 +45,10 @@ public class LancheDTO implements IObjetoComId {
 
     public String getValor() {
 	return valor;
+    }
+
+    public void setDescricaoIngredientes(final String pDescricaoIngredientes) {
+	descricaoIngredientes = pDescricaoIngredientes;
     }
 
     public void setId(final Long pId) {

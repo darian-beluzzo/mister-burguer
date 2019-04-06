@@ -52,7 +52,7 @@ public class LancheServiceImpl extends BaseService<Lanche, Long> implements Lanc
 	return calcularValorLanche(lanche);
     }
 
-    private Lanche calcularValorLanche(final Lanche pLanche) {
+    public Lanche calcularValorLanche(final Lanche pLanche) {
 	BigDecimal valorLanche = ingredienteService.sumarizarValorIngredientes(pLanche.getIngredientes());
 	//	BigDecimal valorDesconto = promocaoService.enquadrarPromocao(pLanche.getIngredientes());
 	pLanche.setValor(valorLanche);

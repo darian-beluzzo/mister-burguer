@@ -4,6 +4,7 @@ import com.misterburguer.domain.Ingrediente;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author darian.beluzzo
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public interface IngredienteService extends IBaseService<Ingrediente, Long> {
 
-    BigDecimal sumarizarValorIngredientes(List<Ingrediente> ingredientes);
+    List<Ingrediente> findAllById(Set<Long> ingredientes);
 
-    BigDecimal sumarizarValorIngredientesPorId(List<Long> idsIngredientes);
+    BigDecimal sumarizarValorIngredientes(List<Ingrediente> ingredientes);
 }
