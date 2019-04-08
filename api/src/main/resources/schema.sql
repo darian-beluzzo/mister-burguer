@@ -24,14 +24,16 @@ CREATE TABLE ingredientes_do_lanche (
   id_ingrediente BIGINT);
 
 CREATE TABLE promocao (
-  id          BIGINT default seq_promocao.nextval primary key,
-  nome        VARCHAR(100) NOT NULL,
-  quantidade  BIGINT       NOT NULL,
-  desconto    BIGINT       NOT NULL,
-  unidade     VARCHAR(10)  NOT NULL);
+  id                    BIGINT default seq_promocao.nextval primary key,
+  nome                  VARCHAR(100) NOT NULL,
+  tipo_desconto         VARCHAR(100) NOT NULL,
+  porcentagem_desconto  NUMBER(3,1)          ,
+  ordem                 BIGINT       NOT NULL);
 
 CREATE TABLE promocao_regras (
   id             BIGINT default seq_promocao_regras.nextval primary key,
   id_promocao    BIGINT      NOT NULL,
+  id_ingrediente BIGINT      NOT NULL,
   operador       VARCHAR(10) NOT NULL,
-  id_ingrediente BIGINT      NOT NULL);
+  quantidade     BIGINT      NOT NULL,
+  desconto       BIGINT);

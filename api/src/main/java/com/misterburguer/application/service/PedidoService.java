@@ -1,9 +1,7 @@
 package com.misterburguer.application.service;
 
-import com.misterburguer.infra.dto.PedidoDTO;
+import com.misterburguer.domain.CalculoPedido;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,5 +11,5 @@ import java.util.Map;
  */
 public interface PedidoService {
 
-    BigDecimal calcularPedido(Map<Long, Integer> pIngredientes);
+    CalculoPedido calcularPedido(Map<Long, Integer> pIngredientes);
 }

@@ -6,13 +6,13 @@ import com.misterburguer.application.service.LancheService;
 import com.misterburguer.application.service.PromocaoService;
 import com.misterburguer.domain.Lanche;
 import com.misterburguer.domain.repository.LancheRepository;
+import com.misterburguer.infra.util.BigDecimalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author darian.beluzzo
@@ -35,26 +35,26 @@ public class LancheServiceImpl extends BaseService<Lanche, Long> implements Lanc
     @Override
     public List<Lanche> findAll() {
 	List<Lanche> lanches = super.findAll();
-	lanches.stream().map(this::calcularValorLanche).collect(Collectors.toList());
+	lanches.forEach(this::calcularValorLanchePadrao);
 	return lanches;
     }
 
     @Override
     public Optional<Lanche> findById(final Long pId) {
 	Optional<Lanche> lancheOptional = super.findById(pId);
-	lancheOptional.ifPresent(this::calcularValorLanche);
+	lancheOptional.ifPresent(this::calcularValorLanchePadrao);
 	return lancheOptional;
     }
 
     @Override
     public Lanche update(final Lanche pEntity) {
 	Lanche lanche = super.update(pEntity);
-	return calcularValorLanche(lanche);
+	return calcularValorLanchePadrao(lanche);
     }
 
-    public Lanche calcularValorLanche(final Lanche pLanche) {
+    private Lanche calcularValorLanchePadrao(final Lanche pLanche) {
 	BigDecimal valorLanche = ingredienteService.sumarizarValorIngredientes(pLanche.getIngredientes());
-	//	BigDecimal valorDesconto = promocaoService.enquadrarPromocao(pLanche.getIngredientes());
+	valorLanche = BigDecimalUtil.setDefaultScale(valorLanche);
 	pLanche.setValor(valorLanche);
 	return pLanche;
     }

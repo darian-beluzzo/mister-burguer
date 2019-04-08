@@ -1,11 +1,10 @@
 package com.misterburguer.domain;
 
 import com.misterburguer.domain.shared.IObjetoComId;
+import com.misterburguer.domain.shared.TipoDesconto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -16,26 +15,24 @@ import java.util.List;
 @Entity
 public class Promocao implements IObjetoComId {
 
-    private Integer desconto;
-
     @Id
     @GeneratedValue
     private Long id;
 
     private String nome;
 
-    private Integer quantidade;
+    private int ordem;
 
-    //    @OneToMany
-    //    @JoinTable(name = "promocao_regras", joinColumns = @JoinColumn(name = "id_lanche"))
+    private BigDecimal porcentagemDesconto;
+
+    @Transient
+    private int qtdDescontar;
+
     @OneToMany(targetEntity = PromocaoRegras.class, mappedBy = "promocao", orphanRemoval = true)
     private List<PromocaoRegras> regras;
 
-    private String unidade;
-
-    public Integer getDesconto() {
-	return desconto;
-    }
+    @Enumerated(value = EnumType.STRING)
+    private TipoDesconto tipoDesconto;
 
     @Override public Long getId() {
 	return id;
@@ -45,20 +42,24 @@ public class Promocao implements IObjetoComId {
 	return nome;
     }
 
-    public Integer getQuantidade() {
-	return quantidade;
+    public int getOrdem() {
+	return ordem;
+    }
+
+    public BigDecimal getPorcentagemDesconto() {
+	return porcentagemDesconto;
+    }
+
+    public int getQtdDescontar() {
+	return qtdDescontar;
     }
 
     public List<PromocaoRegras> getRegras() {
 	return regras;
     }
 
-    public String getUnidade() {
-	return unidade;
-    }
-
-    public void setDesconto(final Integer pDesconto) {
-	desconto = pDesconto;
+    public TipoDesconto getTipoDesconto() {
+	return tipoDesconto;
     }
 
     public void setId(final Long pId) {
@@ -69,15 +70,24 @@ public class Promocao implements IObjetoComId {
 	nome = pNome;
     }
 
-    public void setQuantidade(final Integer pQuantidade) {
-	quantidade = pQuantidade;
+    public void setOrdem(final int pOrdem) {
+	ordem = pOrdem;
+    }
+
+    public void setPorcentagemDesconto(final BigDecimal pPorcentagemDesconto) {
+	porcentagemDesconto = pPorcentagemDesconto;
+    }
+
+    public void setQtdDescontar(final int pQtdDescontar) {
+	qtdDescontar = pQtdDescontar;
     }
 
     public void setRegras(final List<PromocaoRegras> pRegras) {
 	regras = pRegras;
     }
 
-    public void setUnidade(final String pUnidade) {
-	unidade = pUnidade;
+    public void setTipoDesconto(final TipoDesconto pTipoDesconto) {
+	tipoDesconto = pTipoDesconto;
     }
+
 }

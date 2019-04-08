@@ -3,12 +3,19 @@ package com.misterburguer.application.service.impl;
 import com.misterburguer.application.service.IngredienteService;
 import com.misterburguer.application.service.PedidoService;
 import com.misterburguer.application.service.PromocaoService;
-import com.misterburguer.domain.Ingrediente;
-import com.misterburguer.infra.dto.PedidoDTO;
+import com.misterburguer.domain.CalculoPedido;
+import com.misterburguer.domain.CalculoPedidoItem;
+import com.misterburguer.domain.Promocao;
+import com.misterburguer.domain.PromocaoRegras;
+import com.misterburguer.domain.shared.TipoDesconto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,26 +33,63 @@ public class PedidoServiceImpl implements PedidoService {
     @Autowired
     private PromocaoService promocaoService;
 
-    @Override public BigDecimal calcularPedido(final Map<Long, Integer> pIngredientes) {
-	List<Ingrediente> ingredientes = ingredienteService.findAllById(pIngredientes.keySet());
+    @Override
+    @Transactional
+    public CalculoPedido calcularPedido(final Map<Long, Integer> pQuantidadeIngredientes) {
 
-	BigDecimal valorIngredientes = ingredienteService.sumarizarValorIngredientes(ingredientes);
-	promocaoService.calcularDescontoPromocao(ingredientes, pIngredientes);
+	BigDecimal valorTotal = ingredienteService.sumarizarValorIngredientes(pQuantidadeIngredientes);
+	List<Promocao> promocoes = promocaoService.calcularDescontoPromocao(pQuantidadeIngredientes);
 
-	return null;
-    }
+	List<CalculoPedidoItem> itens = new ArrayList<>();
 
-    public BigDecimal enquadrarPromocao(final List<PedidoDTO> pIngredientes) {
-	boolean temAlface = false;
-	boolean temBacon = false;
+	// Ordeno as promoções pois o desconto no pedido (Ex: 10%) deve ser aplicado por último
+	promocoes.sort(Comparator.comparingInt(Promocao::getOrdem));
 
-	//	for (IngredienteDTO ingrediente : pIngredientes) {
-	//	    temAlface &= "Alface".equals(ingrediente.getNome());
-	//	    temBacon &= "Bacon".equals(ingrediente.getNome());
-	//	}
-	//	Map<String, List<IngredienteDTO>> ingredientesPorNome = pIngredientes.stream()
-	//			.collect(Collectors.groupingBy(IngredienteDTO::getNome));
+	for (Promocao promocao : promocoes) {
 
-	return null;
+	    CalculoPedidoItem promocaoRetornoItem = new CalculoPedidoItem();
+	    promocaoRetornoItem.setNome(promocao.getNome());
+	    itens.add(promocaoRetornoItem);
+
+	    BigDecimal valorDesconto = BigDecimal.ZERO;
+
+	    // Se for desconto no lanche (porcentagem), já calcula direto
+	    if (TipoDesconto.isLanche(promocao.getTipoDesconto())) {
+
+		valorDesconto = valorTotal.multiply(promocao.getPorcentagemDesconto())
+				.divide(new BigDecimal(100), RoundingMode.HALF_UP);
+
+		promocaoRetornoItem.setQuantidadeDesconto(promocao.getPorcentagemDesconto() + "%");
+
+	    }
+	    // Senão calcula o preço de acordo com a configuração de cada ingrediente
+	    else if (TipoDesconto.isIngrediente(promocao.getTipoDesconto())) {
+
+		Integer totalDescontar = 0;
+		for (PromocaoRegras regra : promocao.getRegras()) {
+
+		    // Se não tem desconto continua para próxima regra pois pode ser apenas uma regra de enquadramento na promoção
+		    if (regra.getDesconto() != null && regra.getDesconto() >= 0) {
+			Long idIngrediente = regra.getIdIngrediente();
+			Integer qtdPedida = pQuantidadeIngredientes.get(idIngrediente);
+			// Calcula a quantidade a pagar de acordo com a quantidade e desconto.
+			// Assim é mais fácil configurar a regra de desconto. Ex: 2 ganha 1, 3 ganha 1 ou 4 ganha 2, etc
+			int qtdDescontar = ((qtdPedida / regra.getQuantidade()) * regra.getDesconto());
+			totalDescontar += qtdDescontar;
+
+			BigDecimal valorDescontoItem = regra.getIngrediente().getValor().multiply(new BigDecimal(qtdDescontar));
+			valorDesconto = valorDesconto.add(valorDescontoItem);
+		    }
+		}
+		promocaoRetornoItem.setQuantidadeDesconto(totalDescontar.toString());
+	    }
+
+	    promocaoRetornoItem.setValorDesconto(valorDesconto);
+	    valorTotal = valorTotal.subtract(valorDesconto);
+	}
+
+	CalculoPedido calculoPedido = new CalculoPedido(valorTotal, itens);
+
+	return calculoPedido;
     }
 }

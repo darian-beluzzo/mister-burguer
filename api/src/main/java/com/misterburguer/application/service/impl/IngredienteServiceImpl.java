@@ -7,8 +7,9 @@ import com.misterburguer.domain.repository.IngredienteRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author darian.beluzzo
@@ -34,6 +35,31 @@ public class IngredienteServiceImpl extends BaseService<Ingrediente, Long> imple
 	if (ingredientes == null || ingredientes.size() == 0) {
 	    return BigDecimal.ZERO;
 	}
-	return ingredientes.stream().map(Ingrediente::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
+	Map<Long, Integer> mapIngredianteQuantidade = ingredientes.stream().filter(Objects::nonNull)
+			.collect(Collectors.toMap(Ingrediente::getId, v -> 1));
+
+	return sumarizarValorIngredientes(mapIngredianteQuantidade);
+    }
+
+    @Override
+    public BigDecimal sumarizarValorIngredientes(final Map<Long, Integer> pQuantidadeIngredientes) {
+
+	if (pQuantidadeIngredientes == null || pQuantidadeIngredientes.isEmpty()) {
+	    return BigDecimal.ZERO;
+	}
+
+	List<Ingrediente> ingredientes = findAllById(pQuantidadeIngredientes.keySet());
+
+	Function<Ingrediente, BigDecimal> funcaoSomaIngredientes = i -> {
+	    Integer qtdPedida = pQuantidadeIngredientes.get(i.getId());
+	    if (qtdPedida == null || qtdPedida <= 0) {
+		return BigDecimal.ZERO;
+	    } else {
+		return i.getValor().multiply(new BigDecimal(qtdPedida));
+	    }
+	};
+
+	Optional<BigDecimal> valorTotal = ingredientes.stream().map(funcaoSomaIngredientes).reduce(BigDecimal::add);
+	return valorTotal.orElse(BigDecimal.ZERO);
     }
 }

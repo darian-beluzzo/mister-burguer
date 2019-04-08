@@ -1,6 +1,6 @@
 package com.misterburguer.application.service;
 
-import com.misterburguer.domain.Ingrediente;
+import com.misterburguer.domain.Promocao;
 
 import java.util.List;
 import java.util.Map;
@@ -12,5 +12,5 @@ import java.util.Map;
  */
 public interface PromocaoService {
 
-    void calcularDescontoPromocao(List<Ingrediente> pIngredientes, Map<Long, Integer> pQuantidadeIngredientes);
+    List<Promocao> calcularDescontoPromocao(Map<Long, Integer> pQuantidadeIngredientes);
 }

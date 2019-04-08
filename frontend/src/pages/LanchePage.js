@@ -56,7 +56,7 @@ class LanchePage extends Component {
             <TableRow key={lanche.id}>
               <TableCell component="th" scope="row">{lanche.nome}</TableCell>
               <TableCell>{lanche.ingredientes.map(ingrediente => ingrediente.nome+", ")}</TableCell>
-              <TableCell>R$ {lanche.valor.toLocaleString(navigator.language, { minimumFractionDigits: 2 })}</TableCell>
+              <TableCell>R$ {lanche.valor}</TableCell>
               <TableCell>{lanche.urlImagem}</TableCell>
             </TableRow>
           ))}

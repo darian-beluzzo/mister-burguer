@@ -1,9 +1,12 @@
 package com.misterburguer.controller;
 
 import com.misterburguer.application.service.PedidoService;
-import com.misterburguer.infra.dto.PedidoResponseDTO;
+import com.misterburguer.domain.CalculoPedido;
+import com.misterburguer.infra.dto.CalculoPedidoDTO;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.net.URISyntaxException;
 import java.util.Map;
 
 /**
@@ -27,51 +29,21 @@ public class PedidoController {
 
     private PedidoService pedidoService;
 
+    @Autowired
+    protected ModelMapper modelMapper;
+
     public PedidoController(PedidoService pedidoService) {
 	this.pedidoService = pedidoService;
     }
 
     @PostMapping("/calcular")
-    ResponseEntity<PedidoResponseDTO> calcularPedido(@Valid @RequestBody Map<Long, Integer> pedidoMap)
-		    throws URISyntaxException {
+    ResponseEntity<CalculoPedidoDTO> calcularPedido(@Valid @RequestBody Map<Long, Integer> pedidoMap) {
 	log.info("Request to calcular pedido: {}", pedidoMap);
 
-	pedidoService.calcularPedido(pedidoMap);
+	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedidoMap);
 
-	PedidoResponseDTO pedidoResponseDTO = new PedidoResponseDTO();
-	pedidoResponseDTO.setValor("12,50");
-	pedidoResponseDTO.setPromocao("Desconto promoção: Muita carne");
-	pedidoResponseDTO.setDesconto("2,50");
-	return ResponseEntity.ok().body(pedidoResponseDTO);
+	CalculoPedidoDTO calculoPedidoDTO = modelMapper.map(calculoPedido, CalculoPedidoDTO.class);
+
+	return ResponseEntity.ok().body(calculoPedidoDTO);
     }
-    //
-    //    @GetMapping("/pedido/{id}")
-    //    ResponseEntity<?> getPedido(@PathVariable Long id) {
-    //	Optional<Pedido> pedido = pedidoRepository.findById(id);
-    //	return pedido.map(response -> ResponseEntity.ok().body(response))
-    //			.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    //    }
-    //
-    //    @GetMapping("/pedido")
-    //    Collection<PedidoDTO> pedido() {
-    //	//        return pedidoRepository.findAll();
-    //	List<Pedido> all = lancheRepository.findAll();
-    //	BigDecimal valor;
-    //	for (Pedido pedido : all) {
-    //	    valor = BigDecimal.ZERO;
-    //	    List<Ingrediente> ingredientes = pedido.getIngredientes();
-    //	    for (Ingrediente ingrediente : ingredientes) {
-    //		valor = valor.add(ingrediente.getValor());
-    //	    }
-    //	    pedido.setValor(valor);
-    //	}
-    //	return all;
-    //    }
-
-    //    @PutMapping("/pedido")
-    //    ResponseEntity<Pedido> updatePedido(@Valid @RequestBody Pedido pedido) {
-    //	log.info("Request to update pedido: {}", pedido);
-    //	Pedido result = pedidoRepository.save(pedido);
-    //	return ResponseEntity.ok().body(result);
-    //    }
 }

@@ -57,7 +57,7 @@ class PedidoPadraoPage extends Component {
     open: false,
     open2: false,
     ingredientes: [],
-    valorCalculadoLanche: [],
+    calculoPedido: [],
   };
 
   async componentDidMount() {
@@ -84,14 +84,17 @@ class PedidoPadraoPage extends Component {
     .then((response) => {
         this.setState({ ingredientes: response.data });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        // this.setState({ ingredientes: [] });
+        console.log(error)
+      });
       ;
     this.setState({ open2: true });
   };
 
   handlePopupIngredientesClose = () => {
     this.setState({ open2: false });
-    this.setState({ ingredientes: [], valorCalculadoLanche: [] });
+    this.setState({ ingredientes: [], calculoPedido: [] });
   };
 
   handleAlterarQuantidadeIngrediente(event, index, quantidade) {
@@ -113,8 +116,8 @@ class PedidoPadraoPage extends Component {
 
     await api.post('/pedido/calcular', req)
     .then((response) =>  {
-      console.log(response.data.valor);
-      this.setState({ valorCalculadoLanche: response.data });
+      console.log(response.data);
+      this.setState({ calculoPedido: response.data });
     })
     .catch((error) => {
       console.log(error);
@@ -260,20 +263,24 @@ class PedidoPadraoPage extends Component {
                   </TableCell>
                 </TableRow>
               ))}
-              <TableRow>
-                <TableCell className={this.props.classes.boldCell} align="right">
-                  {this.state.valorCalculadoLanche.promocao}
-                </TableCell>
-                <TableCell className={this.props.classes.boldCell}>
-                  {this.state.valorCalculadoLanche.desconto}
-                </TableCell>
-              </TableRow>
+              
+              {this.state.calculoPedido.itens.map((row, index) => (
+                <TableRow key={row.index}>
+                  <TableCell className={this.props.classes.boldCell} align="right">
+                    {row.nome} (-{row.quantidadeDesconto})
+                  </TableCell>
+                  <TableCell className={this.props.classes.boldCell}>
+                    {row.valorDesconto}
+                  </TableCell>
+                </TableRow>
+              ))}
+              
               <TableRow>
                 <TableCell className={this.props.classes.boldCell} align="right">
                   Total
                 </TableCell>
                 <TableCell className={this.props.classes.boldCell}>
-                  {this.state.valorCalculadoLanche.valor}
+                  {this.state.calculoPedido.valorTotal}
                 </TableCell>
               </TableRow>
  
