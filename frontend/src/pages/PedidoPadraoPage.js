@@ -264,13 +264,13 @@ class PedidoPadraoPage extends Component {
                 </TableRow>
               ))}
               
-              {this.state.calculoPedido.itens.map((row, index) => (
+              {this.state.calculoPedido.itens !== undefined && this.state.calculoPedido.itens.map((row, index) => (
                 <TableRow key={row.index}>
                   <TableCell className={this.props.classes.boldCell} align="right">
                     {row.nome} (-{row.quantidadeDesconto})
                   </TableCell>
                   <TableCell className={this.props.classes.boldCell}>
-                    {row.valorDesconto}
+                    -{row.valorDesconto}
                   </TableCell>
                 </TableRow>
               ))}

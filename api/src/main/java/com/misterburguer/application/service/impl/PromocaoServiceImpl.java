@@ -56,53 +56,18 @@ public class PromocaoServiceImpl implements PromocaoService {
 	return retorno;
     }
 
-    //    private void enquadraNaPromocaoDeIngrediente(final Map<Long, Integer> pQuantidadeIngredientes,
-    //		    final Promocao pPromocao) throws PromocaoInvalidaException {
-    //	final double desconto;
-    //	int qtdRegrasOk = 0;
-    //
-    //	List<PromocaoRegras> regras = pPromocao.getRegras();
-    //
-    //	if (regras.size() > 1) {
-    //	    String message = String
-    //			    .format("A Promoção '%s' não pôde ser aplicada pois possui mais de uma regra.", pPromocao.getNome());
-    //	    throw new PromocaoInvalidaException(message);
-    //	}
-    //
-    //	for (PromocaoRegras regra : regras) {
-    //
-    //	    boolean temIngrediente = pQuantidadeIngredientes.containsKey(regra.getId());
-    //
-    //	    if (Operador.isTem(regra.getOperador()) && temIngrediente) {
-    //
-    //		Integer qtdPedida = pQuantidadeIngredientes.get(regra.getIdIngrediente());
-    //		boolean temQuantidade = qtdPedida != null && regra.getQuantidade() != null && qtdPedida > 0
-    //				&& qtdPedida >= regra.getQuantidade();
-    //		qtdRegrasOk = temQuantidade ? ++qtdRegrasOk : qtdRegrasOk;
-    //
-    //		//		desconto = regra.getDesconto();
-    //	    } else if (Operador.isNaoTem(regra.getOperador())) {
-    //		qtdRegrasOk = !temIngrediente ? ++qtdRegrasOk : qtdRegrasOk;
-    //	    }
-    //	}
-    //	if (regras.size() == qtdRegrasOk) {
-    //	    //	    pRetorno.add(pPromocao);
-    //	}
-    //    }
-
     private boolean enquadraNasRegrasDaPromocao(final List<PromocaoRegras> pRegras,
 		    final Map<Long, Integer> pQuantidadeIngredientes) {
 	int qtdRegrasOk = 0;
 
 	for (PromocaoRegras regra : pRegras) {
 
-	    boolean temIngrediente = pQuantidadeIngredientes.containsKey(regra.getIdIngrediente());
+	    Integer qtdPedida = pQuantidadeIngredientes.get(regra.getIdIngrediente());
+	    boolean temIngrediente = qtdPedida != null && qtdPedida > 0;
 
 	    if (Operador.isTem(regra.getOperador()) && temIngrediente) {
 
-		Integer qtdPedida = pQuantidadeIngredientes.get(regra.getIdIngrediente());
-		boolean temQuantidade = qtdPedida != null && regra.getQuantidade() != null && qtdPedida > 0
-				&& qtdPedida >= regra.getQuantidade();
+		boolean temQuantidade = regra.getQuantidade() != null && qtdPedida >= regra.getQuantidade();
 		qtdRegrasOk = temQuantidade ? ++qtdRegrasOk : qtdRegrasOk;
 
 	    } else if (Operador.isNaoTem(regra.getOperador())) {
