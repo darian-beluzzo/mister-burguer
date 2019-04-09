@@ -1,4 +1,4 @@
-package com.misterburguer;
+package com.misterburguer.application.service.impl;
 
 import com.misterburguer.application.service.IngredienteService;
 import com.misterburguer.domain.Ingrediente;
@@ -13,9 +13,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @RunWith(SpringRunner.class)
-//@ContextConfiguration(classes = ApplicationConfig.class)
 @SpringBootTest
-//@DataJpaTest
 public class IngredienteServiceImplTest {
 
     @Autowired

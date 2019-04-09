@@ -1,4 +1,4 @@
-package com.misterburguer;
+package com.misterburguer.application.service.impl;
 
 import com.misterburguer.application.service.PromocaoService;
 import com.misterburguer.domain.Promocao;

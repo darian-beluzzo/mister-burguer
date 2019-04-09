@@ -1,4 +1,4 @@
-package com.misterburguer;
+package com.misterburguer.application.service.impl;
 
 import com.misterburguer.application.service.PedidoService;
 import com.misterburguer.domain.CalculoPedido;
@@ -16,9 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
-//@ContextConfiguration(classes = ApplicationConfig.class)
 @SpringBootTest
-//@DataJpaTest
 public class PedidoServiceImplTest {
 
     @Autowired

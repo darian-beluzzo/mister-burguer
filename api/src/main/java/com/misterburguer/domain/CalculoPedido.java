@@ -16,6 +16,9 @@ public class CalculoPedido {
 
     private BigDecimal valorTotal;
 
+    public CalculoPedido() {
+    }
+
     public CalculoPedido(final BigDecimal pValorTotal, final List<CalculoPedidoItem> pItens) {
 	valorTotal = BigDecimalUtil.setDefaultScale(pValorTotal);
 	itens = pItens;
