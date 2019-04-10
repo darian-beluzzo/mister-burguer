@@ -1,0 +1,14 @@
+FROM openjdk:8-alpine
+
+ENV PROJECT_HOME /app
+#ENV JAR_NAME misterburguer-0.0.1-SNAPSHOT.jar
+
+RUN mkdir -p $PROJECT_HOME
+
+COPY ./api/target/misterburguer-0.0.1-SNAPSHOT.jar $PROJECT_HOME
+
+WORKDIR $PROJECT_HOME
+
+EXPOSE 8081
+
+CMD ["java", "-jar", "-Dspring.profiles.active=prod" ,"misterburguer-0.0.1-SNAPSHOT.jar"]
