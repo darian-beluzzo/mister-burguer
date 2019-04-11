@@ -41,10 +41,31 @@ O frontend irá subir no endereço http://localhost:3000
 
 ## Frontend e Backend em modo produção
 
+### Build automático
 Para realizar o build dos artefatos e subir a aplicação utilizando os contêineres docker basta rodar os comandos abaixo:
 ```
 cd docker/prod
 ./build-run.sh
+```
+
+A aplicação estará acessível no endereço http://localhost
+
+Para rodar manualmente
+
+**Build do backend**
+```
+cd docker/prod
+export MAVEN_CONFIG=~/.m2
+docker run -u $UID --rm -v $PWD/../../api:/app -v $MAVEN_CONFIG:/app/.m2 -e MAVEN_CONFIG=/app/.m2 -w /app --name api-build maven:3.6-jdk-8 mvn -Duser.home=/app package
+```
+
+**Build do frontend**
+```
+docker run -u $UID --rm -v $PWD/../../frontend:/app -w /app --name react-build node /bin/bash -c "yarn; yarn build";
+```
+**Inicia os servicos**
+```
+docker-compose up -d
 ```
 
 A aplicação estará acessível no endereço http://localhost
