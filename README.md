@@ -50,7 +50,7 @@ cd docker/prod
 
 A aplicação estará acessível no endereço http://localhost
 
-Para rodar manualmente
+### Build manual
 
 **Build do backend**
 ```
