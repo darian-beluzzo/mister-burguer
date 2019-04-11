@@ -53,6 +53,9 @@ A aplicação estará acessível no endereço http://localhost
 ### Build manual
 
 **Build do backend**
+
+Partindo da raíz do projeto.
+
 ```
 cd docker/prod
 export MAVEN_CONFIG=~/.m2
@@ -60,9 +63,13 @@ docker run -u $UID --rm -v $PWD/../../api:/app -v $MAVEN_CONFIG:/app/.m2 -e MAVE
 ```
 
 **Build do frontend**
+
+Assumindo que ainda esteja no diretório **docker/prod**
+
 ```
 docker run -u $UID --rm -v $PWD/../../frontend:/app -w /app --name react-build node /bin/bash -c "yarn; yarn build";
 ```
+
 **Inicia os servicos**
 ```
 docker-compose up -d
