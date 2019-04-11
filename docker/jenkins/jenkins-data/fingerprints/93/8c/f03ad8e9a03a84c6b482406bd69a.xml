@@ -1,0 +1,74 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<fingerprint>
+  <timestamp>2019-04-11 01:18:02.329 UTC</timestamp>
+  <original>
+    <name>mister-burguer/master</name>
+    <number>5</number>
+  </original>
+  <md5sum>938cf03ad8e9a03a84c6b482406bd69a</md5sum>
+  <fileName>Docker image sha256:938cf03ad8e9a03a84c6b482406bd69ad975eb173f5972a9ca440c94e9d4b39c</fileName>
+  <usages/>
+  <facets>
+    <org.jenkinsci.plugins.docker.commons.fingerprint.DockerRunFingerprintFacet plugin="docker-commons@1.14">
+      <timestamp>1554945482368</timestamp>
+      <imageId>sha256:938cf03ad8e9a03a84c6b482406bd69ad975eb173f5972a9ca440c94e9d4b39c</imageId>
+      <usages>
+        <entry>
+          <string>mister-burguer/master</string>
+          <ranges>5-11</ranges>
+        </entry>
+      </usages>
+      <records class="java.util.concurrent.CopyOnWriteArrayList">
+        <org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+          <host>e7931777090b</host>
+          <containerId>e7931777090b838e2a7c5fac3b2500590e189d99ba24898b832f9b2e034ea5e7</containerId>
+          <containerName>/goofy_brattain</containerName>
+          <created>1554945480000</created>
+          <tags/>
+        </org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+        <org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+          <host>9b952e893b12</host>
+          <containerId>9b952e893b1255b146c899d316f3d24360264877cc3421b043f54be089e35aa8</containerId>
+          <containerName>/gracious_chandrasekhar</containerName>
+          <created>1554945543000</created>
+          <tags/>
+        </org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+        <org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+          <host>e0386963ed47</host>
+          <containerId>e0386963ed47b4e79b00a0601321a413ff8d48d3118fc7c73923ce115a28ae35</containerId>
+          <containerName>/priceless_borg</containerName>
+          <created>1554948026000</created>
+          <tags/>
+        </org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+        <org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+          <host>65e337197b15</host>
+          <containerId>65e337197b15fa241acfae7c8a28e98b3e341e5d89beb432bbeee5ca2c8e7a8c</containerId>
+          <containerName>/admiring_leakey</containerName>
+          <created>1554948336000</created>
+          <tags/>
+        </org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+        <org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+          <host>a8d0eb1361c0</host>
+          <containerId>a8d0eb1361c0fcc8f2731f88b669a2f3510da58c5c7a9843704c36399f81f0cf</containerId>
+          <containerName>/compassionate_greider</containerName>
+          <created>1554948357000</created>
+          <tags/>
+        </org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+        <org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+          <host>9870823700d2</host>
+          <containerId>9870823700d287f93b8774c249ff222b83215396471658024e49f1067eca185b</containerId>
+          <containerName>/admiring_roentgen</containerName>
+          <created>1554948560000</created>
+          <tags/>
+        </org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+        <org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+          <host>0e680a64e386</host>
+          <containerId>0e680a64e386a154fb178f4804fa845f4f9774bf246b056c518bbe42de050761</containerId>
+          <containerName>/sad_goldstine</containerName>
+          <created>1554948579000</created>
+          <tags/>
+        </org.jenkinsci.plugins.docker.commons.fingerprint.ContainerRecord>
+      </records>
+    </org.jenkinsci.plugins.docker.commons.fingerprint.DockerRunFingerprintFacet>
+  </facets>
+</fingerprint>

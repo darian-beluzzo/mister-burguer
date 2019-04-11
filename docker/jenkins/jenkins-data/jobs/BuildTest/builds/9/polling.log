@@ -1,0 +1,11 @@
+Started on Apr 11, 2019 1:33:00 PM
+Using strategy: Default
+[poll] Last Built Revision: Revision a6e0e06103fd95ab1df706c0a144044a8683f247 (refs/remotes/origin/master)
+using credential c36ebc64-c2a9-4070-b98f-8ee152d3afeb
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git ls-remote -h https://github.com/darian-beluzzo/mister-burguer.git # timeout=10
+Found 1 remote heads on https://github.com/darian-beluzzo/mister-burguer.git
+[poll] Latest remote head revision on refs/heads/master is: 28330801fc88119cd3d68a6043390c28567fecf4
+Done. Took 1.1 sec
+Changes found
