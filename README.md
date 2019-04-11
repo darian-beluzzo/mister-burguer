@@ -21,9 +21,14 @@ Spring-Boot + Maven
 IDE Intellij IDEA
 
 Para rodar em dev basta acessar o diretório **api** e rodar o comando:
-```
+```bash
 mvn spring-boot:run
 ```
+
+https://gist.github.com/darian-beluzzo/ecf3feb0629f942093b1403b851e18dd
+
+<script src="https://gist.github.com/darian-beluzzo/ecf3feb0629f942093b1403b851e18dd.js"></script>
+
 O backend irá subir no endereço http://localhost:8081
 
 ## Frontend (diretório frontend)
