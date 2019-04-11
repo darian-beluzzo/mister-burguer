@@ -32,7 +32,7 @@ React + yarn
 
 IDE VS Code
 
-para rodar em dev basta acessar o diretório **frontend** e rodar os comandos:
+Para rodar em dev basta acessar o diretório **frontend** e rodar os comandos:
 ```
 yarn
 yarn start
@@ -46,3 +46,5 @@ Para realizar o build dos artefatos e subir a aplicação utilizando os contêin
 cd docker/prod
 ./build-run.sh
 ```
+
+A aplicação estará acessível no endereço http://localhost
