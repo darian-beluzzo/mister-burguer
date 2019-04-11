@@ -69,3 +69,16 @@ docker-compose up -d
 ```
 
 A aplicação estará acessível no endereço http://localhost
+
+## Integração Contínua (Jenkins)
+
+Para inicializar o jenkins é necessário rodar os comandos:
+
+```
+cd docker/jenkins
+docker build -t jenkins_maven .
+docker run -u root --rm -d -p 8082:8080 -v $PWD/jenkins-data:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins jenkins_maven
+```
+O jenkins estará acessível no endereço http://localhost:8082
+
+Usuário e senha foram enviados por email.
