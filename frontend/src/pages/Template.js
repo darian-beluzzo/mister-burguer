@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -116,7 +116,7 @@ class Template extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Mister Burguer
+              Mister Burger
             </Typography>
           </Toolbar>
         </AppBar>
@@ -136,28 +136,34 @@ class Template extends React.Component {
           </div>
           <Divider />
           <List>
-              <ListItem button key="Pedidos" component={Link} to="/pedido">
-                <ListItemIcon><InboxIcon /></ListItemIcon>
-                <ListItemText primary="Pedidos" />
-              </ListItem>
-              <ListItem button key="Lanches" component={Link} to="/lanche">
-                <ListItemIcon><InboxIcon /></ListItemIcon>
-                <ListItemText primary="Lanches" />
-              </ListItem>
-              <ListItem button key="Ingredientes" component={Link} to="/ingrediente">
-                <ListItemIcon><InboxIcon /></ListItemIcon>
-                <ListItemText primary="Ingredientes" />
-              </ListItem>
+            <ListItem button key="Pedidos" component={Link} to="/pedido">
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Pedidos" />
+            </ListItem>
+            <ListItem button key="Lanches" component={Link} to="/lanche">
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Lanches" />
+            </ListItem>
+            <ListItem button key="Ingredientes" component={Link} to="/ingrediente">
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Ingredientes" />
+            </ListItem>
           </List>
         </Drawer>
         <main
-                  className={classNames(classes.content, {
-                    [classes.contentShift]: open,
-                  })}
-                >
-                  <div className={classes.drawerHeader} />
-                  {children}
-                </main>
+          className={classNames(classes.content, {
+            [classes.contentShift]: open,
+          })}
+        >
+          <div className={classes.drawerHeader} />
+          {children}
+        </main>
       </div>
     );
   }

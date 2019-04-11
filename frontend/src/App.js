@@ -22,6 +22,6 @@ const App = () => (
   </BrowserRouter>
 );
 
-App.displayName = 'Mister Burguer';
+App.displayName = 'Mister Burger';
 
 export default App;

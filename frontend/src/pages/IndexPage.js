@@ -1,8 +1,6 @@
 import React from 'react';
 
-const IndexPage = () => (
-      <h1>IndexPage</h1>
-    );
+const IndexPage = () => <h1>IndexPage</h1>;
 
 IndexPage.displayName = 'IndexPage';
 
