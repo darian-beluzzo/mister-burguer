@@ -10,8 +10,11 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                echo "${env.PATH}"
-                sh 'mvn -v' 
+                script {
+                    env.MAVEN_REPO = readFile '.env'
+                }
+                echo "${env.MAVEN_REPO}"
+                sh 'mvn test' 
             }
         }
     }
