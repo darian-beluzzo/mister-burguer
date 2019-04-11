@@ -6,7 +6,8 @@ Esta é a implementação simples utilizando a abordagem de modelagem DDD onde o
 
 ## Padrão Data Transfer Object (DTO)
 Foi utilizado o padrão  para mapear e converter os objetos recebidos da camada de apresentação (React) do frontend e convertê-los para as entities e vice-versa. Esta conversão é feita nos controllers Rest.
-Nesta abordagem defimos exatamente quais atributos e quais tipos serão aceitos no request e serão enviados no response.
+
+Nesta abordagem a principal vantagem é que definimos exatamente quais atributos e quais tipos serão aceitos no request e quais serão enviados no response.
 A principal desvantagem no meu ponto de vista é que pode gerar um grande boilerplate de classes.
 
 
