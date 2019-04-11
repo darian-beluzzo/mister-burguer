@@ -72,6 +72,8 @@ A aplicação estará acessível no endereço http://localhost
 
 ## Integração Contínua (Jenkins)
 
+Após subir o container, os testes serão executados sempre que houver commit em até 5 minutos (tempo de consulta ao SCM configurado no Jenkins).
+
 Para inicializar o jenkins é necessário rodar os comandos:
 
 ```
