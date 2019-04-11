@@ -1,4 +1,4 @@
-## Tecnologias
+## Backend
 
 Para construção foi utilizado o framework Spring Boot que é responsável por expor as API's REST com a finalidade de atender ao frontend, neste caso.
 
