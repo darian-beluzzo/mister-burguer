@@ -17,6 +17,7 @@ java version "1.8.0_151"
 ## Backend (diretório api)
 
 Spring-Boot + Maven
+
 IDE Intellij IDEA
 
 Para rodar em dev basta acessar o diretório **api** e rodar o comando:
@@ -28,6 +29,7 @@ O backend irá subir no endereço http://localhost:8081
 ## Frontend (diretório frontend)
 
 React + yarn
+
 IDE VS Code
 
 para rodar em dev basta acessar o diretório **frontend** e rodar os comandos:
