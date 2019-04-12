@@ -28,7 +28,7 @@ docker run -u $UID --rm -v $PWD/../../api:/app -v $MAVEN_CONFIG:/app/.m2 -e MAVE
 
 **Build do frontend**
 
-*Assumindo que ainda esteja no diretório docker/prod*
+*Assumindo que esteja no diretório docker/prod*
 
 ```
 docker run -u $UID --rm -v $PWD/../../frontend:/app -w /app --name react-build node /bin/bash -c "yarn; yarn build";
@@ -41,3 +41,12 @@ docker-compose up -d
 
 A aplicação estará acessível no endereço http://localhost
 
+### Parando os serviços
+
+Para parar os serviços rodar o comando:
+
+*Assumindo que esteja no diretório docker/prod*
+
+```
+docker-compose down
+```
