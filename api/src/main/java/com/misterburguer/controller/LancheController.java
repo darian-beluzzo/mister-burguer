@@ -22,7 +22,7 @@ import java.util.Map;
 @RequestMapping("/api/lanche")
 class LancheController extends BaseResource<Lanche, Long, LancheDTO> {
 
-    private final Logger log = LoggerFactory.getLogger(com.misterburguer.controller.PedidoController.class);
+    private final Logger log = LoggerFactory.getLogger(LancheController.class);
 
     private LancheService lancheService;
 

@@ -5,7 +5,7 @@ package com.misterburguer.infra.dto;
  * @version 1.0
  * @since 30/03/19
  */
-public class CalculoPedidoItemDTO {
+public class CalculoLancheItemDTO {
 
     private String nome;
 

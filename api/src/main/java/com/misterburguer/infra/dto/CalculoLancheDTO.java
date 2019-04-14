@@ -9,11 +9,11 @@ import java.util.List;
  */
 public class CalculoLancheDTO {
 
-    private List<CalculoPedidoItemDTO> itens;
+    private List<CalculoLancheItemDTO> itens;
 
     private String valorTotal;
 
-    public List<CalculoPedidoItemDTO> getItens() {
+    public List<CalculoLancheItemDTO> getItens() {
 	return itens;
     }
 
@@ -21,7 +21,7 @@ public class CalculoLancheDTO {
 	return valorTotal;
     }
 
-    public void setItens(final List<CalculoPedidoItemDTO> pItens) {
+    public void setItens(final List<CalculoLancheItemDTO> pItens) {
 	itens = pItens;
     }
 

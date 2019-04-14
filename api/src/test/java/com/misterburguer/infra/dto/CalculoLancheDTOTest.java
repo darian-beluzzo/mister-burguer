@@ -17,7 +17,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
-public class CalculoPedidoDTOTest {
+public class CalculoLancheDTOTest {
 
     @Autowired
     private ModelMapper modelMapper;
@@ -29,22 +29,22 @@ public class CalculoPedidoDTOTest {
 	Integer quantidadeDesconto = 4;
 	String valorDesconto = "5,99";
 
-	CalculoPedidoItemDTO itemDTO = new CalculoPedidoItemDTO();
+	CalculoLancheItemDTO itemDTO = new CalculoLancheItemDTO();
 	itemDTO.setNome(nome);
 	itemDTO.setQuantidadeDesconto(quantidadeDesconto.toString());
 	itemDTO.setValorDesconto(valorDesconto);
 
-	String valorCalculoPedido = "10,25";
+	String valorCalculoLanche = "10,25";
 
-	CalculoLancheDTO calculoPedidoDTO = new CalculoLancheDTO();
-	calculoPedidoDTO.setValorTotal(valorCalculoPedido);
-	calculoPedidoDTO.setItens(Collections.singletonList(itemDTO));
+	CalculoLancheDTO calculoLancheDTO = new CalculoLancheDTO();
+	calculoLancheDTO.setValorTotal(valorCalculoLanche);
+	calculoLancheDTO.setItens(Collections.singletonList(itemDTO));
 
-	CalculoLanche calculoPedido = modelMapper.map(calculoPedidoDTO, CalculoLanche.class);
+	CalculoLanche calculoLanche = modelMapper.map(calculoLancheDTO, CalculoLanche.class);
 
-	Assert.assertEquals(new BigDecimal(valorCalculoPedido.replace(",", ".")), calculoPedido.getValorTotal());
+	Assert.assertEquals(new BigDecimal(valorCalculoLanche.replace(",", ".")), calculoLanche.getValorTotal());
 
-	List<CalculoPromocao> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoLanche.getItens();
 
 	Assert.assertNotNull(itens);
 
@@ -67,21 +67,21 @@ public class CalculoPedidoDTOTest {
 	item.setQuantidadeDesconto(quantidadeDesconto);
 	item.setValorDesconto(new BigDecimal(valorDesconto.replace(",", ".")));
 
-	String valorCalculoPedido = "10,25";
+	String valorCalculoLanche = "10,25";
 
-	CalculoLanche calculoPedido = new CalculoLanche();
-	calculoPedido.setValorTotal(new BigDecimal(valorCalculoPedido.replace(",", ".")));
-	calculoPedido.setItens(Collections.singletonList(item));
+	CalculoLanche calculoLanche = new CalculoLanche();
+	calculoLanche.setValorTotal(new BigDecimal(valorCalculoLanche.replace(",", ".")));
+	calculoLanche.setItens(Collections.singletonList(item));
 
-	CalculoLancheDTO calculoPedidoDTO = modelMapper.map(calculoPedido, CalculoLancheDTO.class);
+	CalculoLancheDTO calculoLancheDTO = modelMapper.map(calculoLanche, CalculoLancheDTO.class);
 
-	Assert.assertEquals(valorCalculoPedido, calculoPedidoDTO.getValorTotal());
+	Assert.assertEquals(valorCalculoLanche, calculoLancheDTO.getValorTotal());
 
-	List<CalculoPedidoItemDTO> itensDTO = calculoPedidoDTO.getItens();
+	List<CalculoLancheItemDTO> itensDTO = calculoLancheDTO.getItens();
 
 	Assert.assertNotNull(itensDTO);
 
-	CalculoPedidoItemDTO itemDTO = itensDTO.get(0);
+	CalculoLancheItemDTO itemDTO = itensDTO.get(0);
 
 	Assert.assertEquals(nome, itemDTO.getNome());
 	Assert.assertEquals(quantidadeDesconto.toString(), itemDTO.getQuantidadeDesconto());

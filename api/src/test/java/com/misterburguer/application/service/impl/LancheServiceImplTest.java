@@ -1,5 +1,6 @@
 package com.misterburguer.application.service.impl;
 
+import com.misterburguer.application.service.LancheService;
 import com.misterburguer.domain.CalculoLanche;
 import com.misterburguer.domain.CalculoPromocao;
 import org.junit.Assert;
@@ -16,10 +17,10 @@ import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PedidoServiceImplTest {
+public class LancheServiceImplTest {
 
     @Autowired
-    private PedidoServiceImpl pedidoService;
+    private LancheService lancheService;
 
     //	1, Alface            , 0.40
     //	2, Bacon             , 2.00
@@ -29,17 +30,17 @@ public class PedidoServiceImplTest {
 
     @Test
     public void calcularPromocao_Light_Corretamente() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
+	Map<Long, Integer> lanche = new HashMap<Long, Integer>() {{
 	    put(1L, 1); // alface    0.40
 	    put(3L, 1); // hamburger 3.00
 	    put(5L, 1); // queijo    1.50
 	}};
 
-	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoLanche = lancheService.calcularLanche(lanche);
 
-	Assert.assertEquals(new BigDecimal("4.41"), calculoPedido.getValorTotal());
+	Assert.assertEquals(new BigDecimal("4.41"), calculoLanche.getValorTotal());
 
-	List<CalculoPromocao> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoLanche.getItens();
 
 	Assert.assertEquals(1, itens.size());
 
@@ -52,23 +53,23 @@ public class PedidoServiceImplTest {
 
     @Test
     public void calcularPromocao_Light_NaoEnquadra() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
+	Map<Long, Integer> lanche = new HashMap<Long, Integer>() {{
 	    put(4L, 1); // ovo        0.80
 	    put(3L, 1); // hamburger  3.00
 	    put(5L, 1); // queijo     1.50
 	}};
 
-	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoLanche = lancheService.calcularLanche(lanche);
 
-	Assert.assertEquals(new BigDecimal("5.30"), calculoPedido.getValorTotal());
+	Assert.assertEquals(new BigDecimal("5.30"), calculoLanche.getValorTotal());
 
-	Assert.assertEquals(0, calculoPedido.getItens().size());
+	Assert.assertEquals(0, calculoLanche.getItens().size());
     }
 
     @Test
     public void calcularPromocao_Light_TresQueijos_TresCarnes_MultiplasVezes_Corretamente() {
 
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
+	Map<Long, Integer> lanche = new HashMap<Long, Integer>() {{
 	    put(1L, 1); // alface    0.40 x 1 = 0.40
 	    put(3L, 7); // hamburger 3.00 x 7 = 21.00 => (-2) = 15.00
 	    put(5L, 7); // queijo    1.50 x 7 = 10.50 => (-2) = 7.50
@@ -78,11 +79,11 @@ public class PedidoServiceImplTest {
 	    //                   22.90 - 10%  = 20.61
 	}};
 
-	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoLanche = lancheService.calcularLanche(lanche);
 
-	Assert.assertEquals(new BigDecimal("20.61"), calculoPedido.getValorTotal());
+	Assert.assertEquals(new BigDecimal("20.61"), calculoLanche.getValorTotal());
 
-	List<CalculoPromocao> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoLanche.getItens();
 
 	Assert.assertEquals(3, itens.size());
 
@@ -104,18 +105,18 @@ public class PedidoServiceImplTest {
 
     @Test
     public void calcularPromocao_TresCarnes_Corretamente() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
+	Map<Long, Integer> lanche = new HashMap<Long, Integer>() {{
 	    put(2L, 1); // bacon      2.00
 	    put(3L, 3); // hamburger  9.00 = (-1) = 6.00
 	    put(5L, 1); // queijo     1.50
 	    //             Total      9.50
 	}};
 
-	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoLanche = lancheService.calcularLanche(lanche);
 
-	Assert.assertEquals(new BigDecimal("9.50"), calculoPedido.getValorTotal());
+	Assert.assertEquals(new BigDecimal("9.50"), calculoLanche.getValorTotal());
 
-	List<CalculoPromocao> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoLanche.getItens();
 
 	Assert.assertEquals(1, itens.size());
 
@@ -127,18 +128,18 @@ public class PedidoServiceImplTest {
 
     @Test
     public void calcularPromocao_TresCarnes_MultiplasVezes_Corretamente() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
+	Map<Long, Integer> lanche = new HashMap<Long, Integer>() {{
 	    put(2L, 1);  // bacon      2.00
 	    put(3L, 10); // hamburger  30.00 = (-9) = 21.00
 	    put(5L, 1);  // queijo     1.50
 	    //	            Total      24.50
 	}};
 
-	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoLanche = lancheService.calcularLanche(lanche);
 
-	Assert.assertEquals(new BigDecimal("24.50"), calculoPedido.getValorTotal());
+	Assert.assertEquals(new BigDecimal("24.50"), calculoLanche.getValorTotal());
 
-	List<CalculoPromocao> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoLanche.getItens();
 
 	Assert.assertEquals(1, itens.size());
 
@@ -151,33 +152,33 @@ public class PedidoServiceImplTest {
 
     @Test
     public void calcularPromocao_TresCarnes_NaoEnquadra() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
+	Map<Long, Integer> lanche = new HashMap<Long, Integer>() {{
 	    put(2L, 1); // bacon      2.00
 	    put(3L, 2); // hamburger  6.00
 	    put(5L, 1); // queijo     1.50
 	    //	           Total      9.50
 	}};
 
-	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoLanche = lancheService.calcularLanche(lanche);
 
-	Assert.assertEquals(new BigDecimal("9.50"), calculoPedido.getValorTotal());
-	Assert.assertEquals(0, calculoPedido.getItens().size());
+	Assert.assertEquals(new BigDecimal("9.50"), calculoLanche.getValorTotal());
+	Assert.assertEquals(0, calculoLanche.getItens().size());
     }
 
     @Test
     public void calcularPromocao_TresQueijos_Corretamente() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
+	Map<Long, Integer> lanche = new HashMap<Long, Integer>() {{
 	    put(2L, 1); // bacon      2.00
 	    put(3L, 1); // hamburger  3.00
 	    put(5L, 3); // queijo     4.50 = (-1) = 3.00
 	    //	           Total      8.00
 	}};
 
-	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoLanche = lancheService.calcularLanche(lanche);
 
-	Assert.assertEquals(new BigDecimal("8.00"), calculoPedido.getValorTotal());
+	Assert.assertEquals(new BigDecimal("8.00"), calculoLanche.getValorTotal());
 
-	List<CalculoPromocao> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoLanche.getItens();
 
 	Assert.assertEquals(1, itens.size());
 
@@ -189,18 +190,18 @@ public class PedidoServiceImplTest {
 
     @Test
     public void calcularPromocao_TresQueijos_MultiplasVezes_Corretamente() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
+	Map<Long, Integer> lanche = new HashMap<Long, Integer>() {{
 	    put(2L, 1);  // bacon      2.00
 	    put(3L, 1);  // hamburger  3.00
 	    put(5L, 10); // queijo     15.00 = (-3) = 10.50
 	    //	            Total      15.50
 	}};
 
-	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoLanche = lancheService.calcularLanche(lanche);
 
-	Assert.assertEquals(new BigDecimal("15.50"), calculoPedido.getValorTotal());
+	Assert.assertEquals(new BigDecimal("15.50"), calculoLanche.getValorTotal());
 
-	List<CalculoPromocao> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoLanche.getItens();
 
 	Assert.assertEquals(1, itens.size());
 
@@ -212,16 +213,16 @@ public class PedidoServiceImplTest {
 
     @Test
     public void calcularPromocao_TresQueijos_NaoEnquadra() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
+	Map<Long, Integer> lanche = new HashMap<Long, Integer>() {{
 	    put(2L, 1); // bacon      2.00
 	    put(3L, 1); // hamburger  3.00
 	    put(5L, 2); // queijo     3.00
 	    //	           Total      8.00
 	}};
 
-	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoLanche = lancheService.calcularLanche(lanche);
 
-	Assert.assertEquals(new BigDecimal("8.00"), calculoPedido.getValorTotal());
-	Assert.assertEquals(0, calculoPedido.getItens().size());
+	Assert.assertEquals(new BigDecimal("8.00"), calculoLanche.getValorTotal());
+	Assert.assertEquals(0, calculoLanche.getItens().size());
     }
 }
