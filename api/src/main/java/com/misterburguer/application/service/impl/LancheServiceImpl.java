@@ -1,17 +1,21 @@
 package com.misterburguer.application.service.impl;
 
 import com.misterburguer.application.service.BaseService;
+import com.misterburguer.application.service.IPromocaoServiceRegistry;
 import com.misterburguer.application.service.IngredienteService;
 import com.misterburguer.application.service.LancheService;
-import com.misterburguer.application.service.PromocaoService;
+import com.misterburguer.domain.CalculoLanche;
+import com.misterburguer.domain.Ingrediente;
 import com.misterburguer.domain.Lanche;
 import com.misterburguer.domain.repository.LancheRepository;
 import com.misterburguer.infra.util.BigDecimalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -26,14 +30,34 @@ public class LancheServiceImpl extends BaseService<Lanche, Long> implements Lanc
     private IngredienteService ingredienteService;
 
     @Autowired
-    private PromocaoService promocaoService;
+    private IPromocaoServiceRegistry promocaoServiceRegistry;
 
     public LancheServiceImpl(final LancheRepository repository) {
 	super(Lanche.class, repository);
     }
 
+    @Transactional
+    public CalculoLanche calcularLanche(final Map<Long, Integer> pQuantidadeIngredientes) {
+
+	final Map<Ingrediente, Integer> mapIngredienteQuantidade = ingredienteService
+			.transformarMapDeIdsParaMapIngredientes(pQuantidadeIngredientes);
+
+	BigDecimal valorTotal = ingredienteService.sumarizarValorIngredientes(mapIngredienteQuantidade);
+
+	CalculoLanche calculoLanche = new CalculoLanche(valorTotal);
+	promocaoServiceRegistry.executarServicosPromocoes(calculoLanche, mapIngredienteQuantidade);
+
+	return calculoLanche;
+    }
+
     @Override
     public List<Lanche> findAll() {
+	List<Lanche> lanches = super.findAll();
+	lanches.forEach(this::calcularValorLanchePadrao);
+	return lanches;
+    }
+
+    public List<Lanche> findAllAndCalculate() {
 	List<Lanche> lanches = super.findAll();
 	lanches.forEach(this::calcularValorLanchePadrao);
 	return lanches;

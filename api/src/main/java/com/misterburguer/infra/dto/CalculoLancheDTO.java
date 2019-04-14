@@ -7,7 +7,7 @@ import java.util.List;
  * @version 1.0
  * @since 30/03/19
  */
-public class CalculoPedidoDTO {
+public class CalculoLancheDTO {
 
     private List<CalculoPedidoItemDTO> itens;
 

@@ -1,8 +1,8 @@
 package com.misterburguer.controller;
 
 import com.misterburguer.application.service.PedidoService;
-import com.misterburguer.domain.CalculoPedido;
-import com.misterburguer.infra.dto.CalculoPedidoDTO;
+import com.misterburguer.domain.CalculoLanche;
+import com.misterburguer.infra.dto.CalculoLancheDTO;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,12 +37,12 @@ public class PedidoController {
     }
 
     @PostMapping("/calcular")
-    ResponseEntity<CalculoPedidoDTO> calcularPedido(@Valid @RequestBody Map<Long, Integer> pedidoMap) {
+    ResponseEntity<CalculoLancheDTO> calcularLanche(@Valid @RequestBody Map<Long, Integer> pedidoMap) {
 	log.info("Request to calcular pedido: {}", pedidoMap);
 
-	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedidoMap);
+	CalculoLanche calculoLanche = pedidoService.calcularPedido(pedidoMap);
 
-	CalculoPedidoDTO calculoPedidoDTO = modelMapper.map(calculoPedido, CalculoPedidoDTO.class);
+	CalculoLancheDTO calculoPedidoDTO = modelMapper.map(calculoLanche, CalculoLancheDTO.class);
 
 	return ResponseEntity.ok().body(calculoPedidoDTO);
     }

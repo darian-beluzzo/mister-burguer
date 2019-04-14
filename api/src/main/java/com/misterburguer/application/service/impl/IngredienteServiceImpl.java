@@ -5,6 +5,7 @@ import com.misterburguer.application.service.IngredienteService;
 import com.misterburguer.domain.Ingrediente;
 import com.misterburguer.domain.repository.IngredienteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -31,35 +32,46 @@ public class IngredienteServiceImpl extends BaseService<Ingrediente, Long> imple
 	return repository.findAllById(ingredientes);
     }
 
-    public BigDecimal sumarizarValorIngredientes(final List<Ingrediente> ingredientes) {
-	if (ingredientes == null || ingredientes.size() == 0) {
+    public BigDecimal sumarizarValorIngredientes(final List<Ingrediente> pIngredientes) {
+
+	if (CollectionUtils.isEmpty(pIngredientes)) {
 	    return BigDecimal.ZERO;
 	}
-	Map<Long, Integer> mapIngredianteQuantidade = ingredientes.stream().filter(Objects::nonNull)
-			.collect(Collectors.toMap(Ingrediente::getId, v -> 1));
+
+	Map<Ingrediente, Integer> mapIngredianteQuantidade = pIngredientes.stream().filter(Objects::nonNull)
+			.collect(Collectors.toMap(key -> key, value -> 1));
 
 	return sumarizarValorIngredientes(mapIngredianteQuantidade);
     }
 
     @Override
-    public BigDecimal sumarizarValorIngredientes(final Map<Long, Integer> pQuantidadeIngredientes) {
+    public BigDecimal sumarizarValorIngredientes(final Map<Ingrediente, Integer> pQuantidadeIngredientes) {
 
-	if (pQuantidadeIngredientes == null || pQuantidadeIngredientes.isEmpty()) {
+	if (CollectionUtils.isEmpty(pQuantidadeIngredientes)) {
 	    return BigDecimal.ZERO;
 	}
 
-	List<Ingrediente> ingredientes = findAllById(pQuantidadeIngredientes.keySet());
-
 	Function<Ingrediente, BigDecimal> funcaoSomaIngredientes = i -> {
-	    Integer qtdPedida = pQuantidadeIngredientes.get(i.getId());
-	    if (qtdPedida == null || qtdPedida <= 0) {
+	    Integer qtdPedida = pQuantidadeIngredientes.get(i);
+	    if (qtdPedida == null || qtdPedida <= 0 || i.getValor() == null) {
 		return BigDecimal.ZERO;
 	    } else {
 		return i.getValor().multiply(new BigDecimal(qtdPedida));
 	    }
 	};
 
-	Optional<BigDecimal> valorTotal = ingredientes.stream().map(funcaoSomaIngredientes).reduce(BigDecimal::add);
+	Optional<BigDecimal> valorTotal = pQuantidadeIngredientes.keySet().stream()
+			.filter(Objects::nonNull)
+			.map(funcaoSomaIngredientes)
+			.reduce(BigDecimal::add);
 	return valorTotal.orElse(BigDecimal.ZERO);
+    }
+
+    public Map<Ingrediente, Integer> transformarMapDeIdsParaMapIngredientes(Map<Long, Integer> pQuantidadeIngredientes) {
+
+	List<Ingrediente> ingredientes = repository.findAllById(pQuantidadeIngredientes.keySet());
+
+	return ingredientes.stream().filter(Objects::nonNull)
+			.collect(Collectors.toMap(key -> key, key -> pQuantidadeIngredientes.get(key.getId())));
     }
 }

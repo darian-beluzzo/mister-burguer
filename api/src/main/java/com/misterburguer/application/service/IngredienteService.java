@@ -18,5 +18,7 @@ public interface IngredienteService extends IBaseService<Ingrediente, Long> {
 
     BigDecimal sumarizarValorIngredientes(List<Ingrediente> ingredientes);
 
-    BigDecimal sumarizarValorIngredientes(Map<Long, Integer> pQuantidadeIngredientes);
+    BigDecimal sumarizarValorIngredientes(Map<Ingrediente, Integer> pMapIngredienteQuantidade);
+
+    Map<Ingrediente, Integer> transformarMapDeIdsParaMapIngredientes(Map<Long, Integer> pQuantidadeIngredientes);
 }

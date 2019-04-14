@@ -26,15 +26,12 @@ public class IngredienteServiceImplTest {
     //	5, Queijo            , 1.50
 
     @Test
-    public void sumarizarIngredientesList_ingredienteInexistenteOuNull() {
+    public void sumarizarIngredientesList_ingredienteSemValorOuNull() {
 
 	Ingrediente ing1 = new Ingrediente();
-	ing1.setId(0L);
+	ing1.setValor(null);
 
-	Ingrediente ing2 = new Ingrediente();
-	ing2.setId(null);
-
-	BigDecimal valorTotal = ingredienteService.sumarizarValorIngredientes(Arrays.asList(ing1, ing2, null));
+	BigDecimal valorTotal = ingredienteService.sumarizarValorIngredientes(Arrays.asList(ing1, null));
 
 	Assert.assertEquals(BigDecimal.ZERO, valorTotal);
     }
@@ -59,13 +56,13 @@ public class IngredienteServiceImplTest {
     public void sumarizarIngredientesList_sucesso() {
 
 	Ingrediente ing1 = new Ingrediente();
-	ing1.setId(1L);
+	ing1.setValor(new BigDecimal("0.40"));
 
 	Ingrediente ing2 = new Ingrediente();
-	ing2.setId(3L);
+	ing2.setValor(new BigDecimal("3.00"));
 
 	Ingrediente ing3 = new Ingrediente();
-	ing3.setId(5L);
+	ing3.setValor(new BigDecimal("1.50"));
 
 	BigDecimal valorTotal = ingredienteService.sumarizarValorIngredientes(Arrays.asList(ing1, ing2, ing3));
 
@@ -74,8 +71,12 @@ public class IngredienteServiceImplTest {
 
     @Test
     public void sumarizarIngredientesMap_ingredienteInexistenteOuNull() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
-	    put(0L, 2);
+
+	Ingrediente ing1 = new Ingrediente();
+	ing1.setValor(null);
+
+	Map<Ingrediente, Integer> pedido = new HashMap<Ingrediente, Integer>() {{
+	    put(ing1, 2);
 	    put(null, 2);
 	}};
 
@@ -86,7 +87,7 @@ public class IngredienteServiceImplTest {
 
     @Test
     public void sumarizarIngredientesMap_pedidoNull() {
-	Map<Long, Integer> pedido = null;
+	Map<Ingrediente, Integer> pedido = null;
 
 	BigDecimal valorTotal = ingredienteService.sumarizarValorIngredientes(pedido);
 	Assert.assertEquals(BigDecimal.ZERO, valorTotal);
@@ -94,7 +95,7 @@ public class IngredienteServiceImplTest {
 
     @Test
     public void sumarizarIngredientesMap_pedidoVazio() {
-	Map<Long, Integer> pedido = new HashMap<>();
+	Map<Ingrediente, Integer> pedido = new HashMap<>();
 
 	BigDecimal valorTotal = ingredienteService.sumarizarValorIngredientes(pedido);
 	Assert.assertEquals(BigDecimal.ZERO, valorTotal);
@@ -102,24 +103,46 @@ public class IngredienteServiceImplTest {
 
     @Test
     public void sumarizarIngredientesMap_quantidadeZeradaOuNull() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
-	    put(1L, 0);
-	    put(2L, null);
-	    put(3L, -10);
-	    put(4L, 1);
+	Ingrediente ing1 = new Ingrediente();
+	ing1.setValor(new BigDecimal("1.50"));
+
+	Ingrediente ing2 = new Ingrediente();
+	ing2.setValor(new BigDecimal("1.50"));
+
+	Ingrediente ing3 = new Ingrediente();
+	ing3.setValor(new BigDecimal("1.50"));
+
+	Ingrediente ing4 = new Ingrediente();
+	ing4.setValor(new BigDecimal("1.50"));
+
+	Map<Ingrediente, Integer> pedido = new HashMap<Ingrediente, Integer>() {{
+	    put(ing1, 0);
+	    put(ing2, null);
+	    put(ing3, -10);
+	    put(ing4, 1);
 	}};
 
 	BigDecimal valorTotal = ingredienteService.sumarizarValorIngredientes(pedido);
 
-	Assert.assertEquals(new BigDecimal("0.80"), valorTotal);
+	Assert.assertEquals(new BigDecimal("1.50"), valorTotal);
     }
 
     @Test
     public void sumarizarIngredientesMap_sucesso() {
-	Map<Long, Integer> pedido = new HashMap<Long, Integer>() {{
-	    put(1L, 1); // alface    0.40
-	    put(3L, 2); // hamburger 6.00
-	    put(5L, 2); // queijo    3.00
+
+	Ingrediente ing1 = new Ingrediente();
+	ing1.setValor(new BigDecimal("0.40"));
+
+	Ingrediente ing2 = new Ingrediente();
+	ing2.setValor(new BigDecimal("3.00"));
+
+	Ingrediente ing3 = new Ingrediente();
+	ing3.setValor(new BigDecimal("1.50"));
+
+	Map<Ingrediente, Integer> pedido = new HashMap<Ingrediente, Integer>() {{
+	    put(ing1, 1); // alface    0.40
+	    put(ing2, 2); // hamburger 6.00
+	    put(ing3, 2); // queijo    3.00
 	}};
 
 	BigDecimal valorTotal = ingredienteService.sumarizarValorIngredientes(pedido);

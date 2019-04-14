@@ -1,6 +1,6 @@
 package com.misterburguer.application.service;
 
-import com.misterburguer.domain.CalculoPedido;
+import com.misterburguer.domain.CalculoLanche;
 
 import java.util.Map;
 
@@ -11,5 +11,5 @@ import java.util.Map;
  */
 public interface PedidoService {
 
-    CalculoPedido calcularPedido(Map<Long, Integer> pIngredientes);
+    CalculoLanche calcularPedido(Map<Long, Integer> pIngredientes);
 }

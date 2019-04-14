@@ -82,7 +82,7 @@ class PedidoPadraoPage extends Component {
     });
 
     await api
-      .post('/pedido/calcular', req)
+      .post('/lanche/calcular', req)
       .then(response => {
         console.log(response.data);
         this.setState({ calculoPedido: response.data });

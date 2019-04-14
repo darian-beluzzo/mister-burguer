@@ -1,16 +1,19 @@
 package com.misterburguer.application.service;
 
-import com.misterburguer.domain.Promocao;
+import com.misterburguer.domain.CalculoPromocao;
+import com.misterburguer.domain.Ingrediente;
 
-import java.util.List;
 import java.util.Map;
 
 /**
+ * Serviço responsável por verifica o enquadramento das promoções e calcular o desconto.
+ * Implementa Comparable pois o cálculo do desconto percentual deve ser aplicado primeiro.
+ *
  * @author darian.beluzzo
  * @version 1.0
- * @since 30/03/19
+ * @since 12/04/19
  */
-public interface PromocaoService {
+public interface PromocaoService extends Comparable {
 
-    List<Promocao> calcularDescontoPromocao(Map<Long, Integer> pQuantidadeIngredientes);
+    CalculoPromocao verificarPromocaoECalcular(final Map<Ingrediente, Integer> pQuantidadeIngredientes);
 }

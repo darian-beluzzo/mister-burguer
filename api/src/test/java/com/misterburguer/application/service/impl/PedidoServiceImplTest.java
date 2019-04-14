@@ -1,8 +1,7 @@
 package com.misterburguer.application.service.impl;
 
-import com.misterburguer.application.service.PedidoService;
-import com.misterburguer.domain.CalculoPedido;
-import com.misterburguer.domain.CalculoPedidoItem;
+import com.misterburguer.domain.CalculoLanche;
+import com.misterburguer.domain.CalculoPromocao;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +19,7 @@ import java.util.Map;
 public class PedidoServiceImplTest {
 
     @Autowired
-    private PedidoService pedidoService;
+    private PedidoServiceImpl pedidoService;
 
     //	1, Alface            , 0.40
     //	2, Bacon             , 2.00
@@ -36,17 +35,17 @@ public class PedidoServiceImplTest {
 	    put(5L, 1); // queijo    1.50
 	}};
 
-	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
 
 	Assert.assertEquals(new BigDecimal("4.41"), calculoPedido.getValorTotal());
 
-	List<CalculoPedidoItem> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoPedido.getItens();
 
 	Assert.assertEquals(1, itens.size());
 
-	CalculoPedidoItem light = itens.stream().filter(i -> "Light".equals(i.getNome())).findFirst().get();
+	CalculoPromocao light = itens.stream().filter(i -> "Light".equals(i.getNome())).findFirst().get();
 	Assert.assertNotNull(light);
-	Assert.assertEquals("10.0%", light.getQuantidadeDesconto());
+	Assert.assertEquals(BigDecimal.TEN, light.getPercentualDesconto());
 	Assert.assertEquals(new BigDecimal("0.49"), light.getValorDesconto());
 
     }
@@ -59,7 +58,7 @@ public class PedidoServiceImplTest {
 	    put(5L, 1); // queijo     1.50
 	}};
 
-	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
 
 	Assert.assertEquals(new BigDecimal("5.30"), calculoPedido.getValorTotal());
 
@@ -79,27 +78,27 @@ public class PedidoServiceImplTest {
 	    //                   22.90 - 10%  = 20.61
 	}};
 
-	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
 
 	Assert.assertEquals(new BigDecimal("20.61"), calculoPedido.getValorTotal());
 
-	List<CalculoPedidoItem> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoPedido.getItens();
 
 	Assert.assertEquals(3, itens.size());
 
-	CalculoPedidoItem light = itens.stream().filter(i -> "Light".equals(i.getNome())).findFirst().get();
+	CalculoPromocao light = itens.stream().filter(i -> "Light".equals(i.getNome())).findFirst().get();
 	Assert.assertNotNull(light);
-	Assert.assertEquals("10.0%", light.getQuantidadeDesconto());
+	Assert.assertEquals(BigDecimal.TEN, light.getPercentualDesconto());
 	Assert.assertEquals(new BigDecimal("2.29"), light.getValorDesconto());
 
-	CalculoPedidoItem muitaCarne = itens.stream().filter(i -> "Muita carne".equals(i.getNome())).findFirst().get();
+	CalculoPromocao muitaCarne = itens.stream().filter(i -> "Muita carne".equals(i.getNome())).findFirst().get();
 	Assert.assertNotNull(muitaCarne);
-	Assert.assertEquals("2", muitaCarne.getQuantidadeDesconto());
+	Assert.assertEquals(Integer.valueOf(2), muitaCarne.getQuantidadeDesconto());
 	Assert.assertEquals(new BigDecimal("6.00"), muitaCarne.getValorDesconto());
 
-	CalculoPedidoItem muitoQueijo = itens.stream().filter(i -> "Muito queijo".equals(i.getNome())).findFirst().get();
+	CalculoPromocao muitoQueijo = itens.stream().filter(i -> "Muito queijo".equals(i.getNome())).findFirst().get();
 	Assert.assertNotNull(muitoQueijo);
-	Assert.assertEquals("2", muitoQueijo.getQuantidadeDesconto());
+	Assert.assertEquals(Integer.valueOf(2), muitoQueijo.getQuantidadeDesconto());
 	Assert.assertEquals(new BigDecimal("3.00"), muitoQueijo.getValorDesconto());
     }
 
@@ -112,17 +111,17 @@ public class PedidoServiceImplTest {
 	    //             Total      9.50
 	}};
 
-	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
 
 	Assert.assertEquals(new BigDecimal("9.50"), calculoPedido.getValorTotal());
 
-	List<CalculoPedidoItem> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoPedido.getItens();
 
 	Assert.assertEquals(1, itens.size());
 
-	CalculoPedidoItem muitaCarne = itens.stream().filter(i -> "Muita carne".equals(i.getNome())).findFirst().get();
+	CalculoPromocao muitaCarne = itens.stream().filter(i -> "Muita carne".equals(i.getNome())).findFirst().get();
 	Assert.assertNotNull(muitaCarne);
-	Assert.assertEquals("1", muitaCarne.getQuantidadeDesconto());
+	Assert.assertEquals(Integer.valueOf(1), muitaCarne.getQuantidadeDesconto());
 	Assert.assertEquals(new BigDecimal("3.00"), muitaCarne.getValorDesconto());
     }
 
@@ -135,18 +134,18 @@ public class PedidoServiceImplTest {
 	    //	            Total      24.50
 	}};
 
-	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
 
 	Assert.assertEquals(new BigDecimal("24.50"), calculoPedido.getValorTotal());
 
-	List<CalculoPedidoItem> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoPedido.getItens();
 
 	Assert.assertEquals(1, itens.size());
 
-	CalculoPedidoItem muitaCarne = itens.stream().filter(i -> "Muita carne".equals(i.getNome())).findFirst().get();
+	CalculoPromocao muitaCarne = itens.stream().filter(i -> "Muita carne".equals(i.getNome())).findFirst().get();
 
 	Assert.assertNotNull(muitaCarne);
-	Assert.assertEquals("3", muitaCarne.getQuantidadeDesconto());
+	Assert.assertEquals(Integer.valueOf(3), muitaCarne.getQuantidadeDesconto());
 	Assert.assertEquals(new BigDecimal("9.00"), muitaCarne.getValorDesconto());
     }
 
@@ -159,7 +158,7 @@ public class PedidoServiceImplTest {
 	    //	           Total      9.50
 	}};
 
-	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
 
 	Assert.assertEquals(new BigDecimal("9.50"), calculoPedido.getValorTotal());
 	Assert.assertEquals(0, calculoPedido.getItens().size());
@@ -174,17 +173,17 @@ public class PedidoServiceImplTest {
 	    //	           Total      8.00
 	}};
 
-	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
 
 	Assert.assertEquals(new BigDecimal("8.00"), calculoPedido.getValorTotal());
 
-	List<CalculoPedidoItem> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoPedido.getItens();
 
 	Assert.assertEquals(1, itens.size());
 
-	CalculoPedidoItem muitoQueijo = itens.stream().filter(i -> "Muito queijo".equals(i.getNome())).findFirst().get();
+	CalculoPromocao muitoQueijo = itens.stream().filter(i -> "Muito queijo".equals(i.getNome())).findFirst().get();
 	Assert.assertNotNull(muitoQueijo);
-	Assert.assertEquals("1", muitoQueijo.getQuantidadeDesconto());
+	Assert.assertEquals(Integer.valueOf(1), muitoQueijo.getQuantidadeDesconto());
 	Assert.assertEquals(new BigDecimal("1.50"), muitoQueijo.getValorDesconto());
     }
 
@@ -197,17 +196,17 @@ public class PedidoServiceImplTest {
 	    //	            Total      15.50
 	}};
 
-	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
 
 	Assert.assertEquals(new BigDecimal("15.50"), calculoPedido.getValorTotal());
 
-	List<CalculoPedidoItem> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoPedido.getItens();
 
 	Assert.assertEquals(1, itens.size());
 
-	CalculoPedidoItem muitoQueijo = itens.stream().filter(i -> "Muito queijo".equals(i.getNome())).findFirst().get();
+	CalculoPromocao muitoQueijo = itens.stream().filter(i -> "Muito queijo".equals(i.getNome())).findFirst().get();
 	Assert.assertNotNull(muitoQueijo);
-	Assert.assertEquals("3", muitoQueijo.getQuantidadeDesconto());
+	Assert.assertEquals(Integer.valueOf(3), muitoQueijo.getQuantidadeDesconto());
 	Assert.assertEquals(new BigDecimal("4.50"), muitoQueijo.getValorDesconto());
     }
 
@@ -220,7 +219,7 @@ public class PedidoServiceImplTest {
 	    //	           Total      8.00
 	}};
 
-	CalculoPedido calculoPedido = pedidoService.calcularPedido(pedido);
+	CalculoLanche calculoPedido = pedidoService.calcularPedido(pedido);
 
 	Assert.assertEquals(new BigDecimal("8.00"), calculoPedido.getValorTotal());
 	Assert.assertEquals(0, calculoPedido.getItens().size());

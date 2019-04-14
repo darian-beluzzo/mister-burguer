@@ -1,8 +1,8 @@
 package com.misterburguer.infra.dto;
 
 import com.misterburguer.ApplicationConfig;
-import com.misterburguer.domain.CalculoPedido;
-import com.misterburguer.domain.CalculoPedidoItem;
+import com.misterburguer.domain.CalculoLanche;
+import com.misterburguer.domain.CalculoPromocao;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,29 +26,29 @@ public class CalculoPedidoDTOTest {
     public void testConverteDTOParaEntity() {
 
 	String nome = "XYZ";
-	String quantidadeDesconto = "4";
+	Integer quantidadeDesconto = 4;
 	String valorDesconto = "5,99";
 
 	CalculoPedidoItemDTO itemDTO = new CalculoPedidoItemDTO();
 	itemDTO.setNome(nome);
-	itemDTO.setQuantidadeDesconto(quantidadeDesconto);
+	itemDTO.setQuantidadeDesconto(quantidadeDesconto.toString());
 	itemDTO.setValorDesconto(valorDesconto);
 
 	String valorCalculoPedido = "10,25";
 
-	CalculoPedidoDTO calculoPedidoDTO = new CalculoPedidoDTO();
+	CalculoLancheDTO calculoPedidoDTO = new CalculoLancheDTO();
 	calculoPedidoDTO.setValorTotal(valorCalculoPedido);
 	calculoPedidoDTO.setItens(Collections.singletonList(itemDTO));
 
-	CalculoPedido calculoPedido = modelMapper.map(calculoPedidoDTO, CalculoPedido.class);
+	CalculoLanche calculoPedido = modelMapper.map(calculoPedidoDTO, CalculoLanche.class);
 
 	Assert.assertEquals(new BigDecimal(valorCalculoPedido.replace(",", ".")), calculoPedido.getValorTotal());
 
-	List<CalculoPedidoItem> itens = calculoPedido.getItens();
+	List<CalculoPromocao> itens = calculoPedido.getItens();
 
 	Assert.assertNotNull(itens);
 
-	CalculoPedidoItem item = itens.get(0);
+	CalculoPromocao item = itens.get(0);
 
 	Assert.assertEquals(nome, item.getNome());
 	Assert.assertEquals(quantidadeDesconto, item.getQuantidadeDesconto());
@@ -59,21 +59,21 @@ public class CalculoPedidoDTOTest {
     public void testConverteEntityParaDTO() {
 
 	String nome = "XYZ";
-	String quantidadeDesconto = "4";
+	Integer quantidadeDesconto = 4;
 	String valorDesconto = "5,99";
 
-	CalculoPedidoItem item = new CalculoPedidoItem();
+	CalculoPromocao item = new CalculoPromocao();
 	item.setNome(nome);
 	item.setQuantidadeDesconto(quantidadeDesconto);
 	item.setValorDesconto(new BigDecimal(valorDesconto.replace(",", ".")));
 
 	String valorCalculoPedido = "10,25";
 
-	CalculoPedido calculoPedido = new CalculoPedido();
+	CalculoLanche calculoPedido = new CalculoLanche();
 	calculoPedido.setValorTotal(new BigDecimal(valorCalculoPedido.replace(",", ".")));
 	calculoPedido.setItens(Collections.singletonList(item));
 
-	CalculoPedidoDTO calculoPedidoDTO = modelMapper.map(calculoPedido, CalculoPedidoDTO.class);
+	CalculoLancheDTO calculoPedidoDTO = modelMapper.map(calculoPedido, CalculoLancheDTO.class);
 
 	Assert.assertEquals(valorCalculoPedido, calculoPedidoDTO.getValorTotal());
 
@@ -84,7 +84,7 @@ public class CalculoPedidoDTOTest {
 	CalculoPedidoItemDTO itemDTO = itensDTO.get(0);
 
 	Assert.assertEquals(nome, itemDTO.getNome());
-	Assert.assertEquals(quantidadeDesconto, itemDTO.getQuantidadeDesconto());
+	Assert.assertEquals(quantidadeDesconto.toString(), itemDTO.getQuantidadeDesconto());
 	Assert.assertEquals(valorDesconto, itemDTO.getValorDesconto());
     }
 }
