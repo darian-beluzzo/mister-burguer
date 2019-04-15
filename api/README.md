@@ -30,7 +30,14 @@ O principal motivo desta escolha é o conhecimento que tenho sobre este pattern.
 ### Padrão Data Transfer Object (DTO)
 Este padrão foi utilizado para mapear e converter os objetos recebidos da camada de apresentação e convertê-los para as entities e vice-versa. Esta conversão é feita nos controllers Rest.
 
-Nesta abordagem a principal vantagem é que definimos exatamente quais atributos e quais tipos serão aceitos no request e quais serão enviados no response, evitando assim expor informações sensíveis ou trafegar mais do que o necessário.
+Nesta abordagem a principal vantagem é que definimos exatamente quais atributos e quais tipos serão aceitos no request e quais serão enviados no response, evitando assim expor informações sensíveis ou trafegar mais dados do que o necessário.
 A principal desvantagem no meu ponto de vista é que pode gerar um grande boilerplate de classes.
 
 
+## Observação
+
+A idéia principal desta implementação foi utilizar uma configuração dinâmica das regras no banco mas a implementação ficou complexa.
+
+Assim foi feita uma segunda implementação na branch **[implementacao2](https://github.com/darian-beluzzo/mister-burguer/tree/implementacao2)**.
+
+Nesta implementação foi feito o uso do pattern **Registry** onde cada serviço que calcula um tipo de promoção se registra em sua inicialização, assim quando o cálculo do lanche custom é invocado, cada serviço de promoção é chamado para verificar se há enquadramento em uma ou mais promoções.
